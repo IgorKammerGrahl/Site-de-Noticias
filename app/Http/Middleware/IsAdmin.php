@@ -8,12 +8,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class IsAdmin
 {
-    public function handle(Request $request, Closure $next)
-    {
-        if (auth()->user() && auth()->user()->isAdmin()) {
-            return $next($request);
-        }
-
-        return redirect('/'); 
-    }
+    Route::middleware('auth')->group(function () {
+        // Rotas protegidas
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    });
 }
